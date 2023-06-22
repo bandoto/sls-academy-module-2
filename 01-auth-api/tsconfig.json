@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
+    "target": "es2020",
+    "module": "es2020",
+    "outDir": "build",
     "strict": true,
-    "lib": [
-      "es6",
-      "es2021",
-      "esnext"
-    ],
-    "target": "es6",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noImplicitAny": false,
-    "allowSyntheticDefaultImports": true
-  }
+    "esModuleInterop": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
