@@ -1,6 +1,10 @@
 import { pool } from "../db.js";
 import bcrypt from "bcryptjs";
-import { generateTokens, saveToken } from "./token-service.js";
+import {
+  generateTokens,
+  saveToken,
+  validRefreshToken,
+} from "./token-service.js";
 import { ISignResponse, IUser } from "../models/user-models.js";
 
 export const registration = async (
@@ -94,6 +98,73 @@ export const login = async (
       id: userId,
       accessToken: tokens.accessToken,
       refreshToken: tokens.refreshToken,
+    },
+  };
+};
+
+export const getCurrentUser = async (id: string): Promise<ISignResponse> => {
+  const user = await pool.query<IUser>(
+    "SELECT * FROM user_schema.users WHERE id = $1",
+    [id]
+  );
+
+  if (!user) {
+    return {
+      success: false,
+      error: "User not found",
+    };
+  }
+
+  const userId = user.rows[0].id;
+  const userEmail = user.rows[0].email;
+
+  return {
+    success: true,
+    data: {
+      id: userId,
+      email: userEmail,
+    },
+  };
+};
+
+export const refresh = async (refreshToken: string): Promise<ISignResponse> => {
+  if (!refreshToken) {
+    return {
+      success: false,
+      error: "Refresh token not found",
+    };
+  }
+
+  const userData = await validRefreshToken(refreshToken);
+  const userToken = await pool.query<IUser>(
+    "SELECT * FROM user_schema.users WHERE refresh_token = $1",
+    [refreshToken]
+  );
+
+  if (!userData || !userToken) {
+    return {
+      success: false,
+      error: "Refresh token not found",
+    };
+  }
+  const user = await pool.query<IUser>(
+    "SELECT * FROM user_schema.users WHERE id = $1",
+    [userData.userId]
+  );
+
+  const userId = user.rows[0].id;
+  const userEmail = user.rows[0].email;
+
+  const tokens = generateTokens({ userId, email: userEmail });
+
+  await saveToken(userId, tokens.refreshToken);
+
+  return {
+    success: true,
+    data: {
+      id: userId,
+      email: userEmail,
+      ...tokens,
     },
   };
 };

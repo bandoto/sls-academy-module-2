@@ -4,7 +4,9 @@
     "module": "es2020",
     "outDir": "build",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "moduleResolution": "nodenext",
+    "strictNullChecks": true
   },
   "include": [
     "src/**/*.ts"

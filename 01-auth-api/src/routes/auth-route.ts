@@ -16,7 +16,4 @@ router.post(
 // Login
 router.post(SIGNIN_ROUTE, signIn);
 
-// CheckAuth
-// router.get('/me')
-
 export default router;
