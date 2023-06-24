@@ -1,12 +1,12 @@
 import { NextFunction, Response } from "express";
 import { validAccessToken } from "../service/token-service.js";
-import { ICustomRequest } from "../models/user-models.js";
+import { ICustomRequest, ISignResponse } from "../models/user-models.js";
 
 export const checkIsAuth = (
   req: ICustomRequest,
   res: Response,
   next: NextFunction
-) => {
+): Response<ISignResponse> | void => {
   try {
     const authorizationHeader = req.headers.authorization;
     if (!authorizationHeader) {
