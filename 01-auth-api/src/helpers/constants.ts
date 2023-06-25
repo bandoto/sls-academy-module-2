@@ -4,3 +4,4 @@ export const SIGNUP_ROUTE = "/sign-up";
 export const SIGNIN_ROUTE = "/sign-in";
 export const GETME_ROUTE = "/me";
 export const REFRESH_ROUTE = "/refresh";
+export const MAIN_ROUTE = "/";

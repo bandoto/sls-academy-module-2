@@ -12,7 +12,7 @@ export const checkIsAuth = (
     if (!authorizationHeader) {
       return res.json({
         success: false,
-        error: "No access",
+        error: "Missing Authentication Token",
       });
     }
 
@@ -20,7 +20,7 @@ export const checkIsAuth = (
     if (!accessToken) {
       return res.json({
         success: false,
-        error: "No access",
+        error: "Missing Authentication Token",
       });
     }
 
@@ -28,7 +28,7 @@ export const checkIsAuth = (
     if (!userData) {
       return res.json({
         success: false,
-        error: "No access",
+        error: "Missing Authentication Token",
       });
     }
 
@@ -38,7 +38,7 @@ export const checkIsAuth = (
   } catch (error) {
     return res.json({
       success: false,
-      error: "No access",
+      error: "Missing Authentication Token",
     });
   }
 };
