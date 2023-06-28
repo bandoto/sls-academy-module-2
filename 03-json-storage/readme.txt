@@ -14,4 +14,4 @@ PUT: http://localhost:5000/demo_bucket/hello
 ROUTE TO READ CREATED FILE BY FOLDER + NAME (REQUIRED: "demo_bucket" - name of folder, "hello" - name of file)
 GET: http://localhost:5000/demo_bucket/hello
   request: none
-  response: {"hello": "world"}
+  response: {"success": true, "data": {"hello": "world"}}
